@@ -5,6 +5,13 @@ This repository allows you to build
 familiar with Emacs building process I suggest you to grab a ready-to-use
 binary version at [Emacs For Mac OSX](http://emacsformacosx.com/).
 
+## Differences to original repository
+
+- Removed patches/20_use_user-emacs-directory_at_startup.patch as it does not work with latest emacs source code (and simply fixing it that the patch works again is probably not the cleanest solution ...). This is the commit that changed `startup.el` such that the patch does not work anymore: https://emba.gnu.org/emacs/emacs/commit/d68ed152ffe4369b3fe082cf39d631cc5360143b
+- Added `texinfo` as prerequisite in documentation section
+- Added path to `texinfo/bin` to build script
+- Added info about macOS headers for macOS 10.14
+
 ## What this version does?
 
 Ok this is an other [Emacs](http://www.gnu.org/software/emacs/) build but
@@ -75,12 +82,25 @@ First you need to install following tools (you may want to use
   - `--with-quantum-depth-16`
   - `--with-webp`
 - `gnutls`
+- `texinfo`(which contains the `makeinfo` binary)
 
 You also need to checkout an Emacs git repository. I suggest you to use
 [Savannah's](this) which is the most up-to-date.
 
 	git clone git://git.savannah.gnu.org/emacs.git
 
+**If your compilation should fail with the following error, read this!**
+
+```bash
+xml.c:26:10: fatal error: 'libxml/tree.h' file not found
+#include <libxml/tree.h>
+```
+
+macOS 10.14 has an installer which creates the necessary header files for the compilation. See https://emacs.stackexchange.com/a/45178 for details.
+
+```bash
+open /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg
+```
 
 ## Building Emacs for OSX
 

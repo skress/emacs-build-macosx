@@ -7,6 +7,8 @@ ROOT_DIR="`pwd`"
 BUILD_DIR=build
 SRC_DIR=emacs
 
+# make sure that makeinfo from texinfo is found before macOS' old version of makeinfo
+export PATH=/usr/local/opt/texinfo/bin:$PATH
 
 rm -rf ${BUILD_DIR}
 mkdir ${BUILD_DIR}
@@ -67,8 +69,7 @@ done
     --build=x86_64-apple-darwin \
     --without-dbus --with-ns
 
-make bootstrap -j8 || exit 1 && make install
-
+make bootstrap -j29 || exit 1 && make install
 
 rm -rf _out
 mkdir _out
